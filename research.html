@@ -30,6 +30,7 @@ html {
 </div>
 <div id="sections">
 <ul class="secs">
+	<li class="secs"><a class="secs" href = "#RBC">Rayleigh-Bernard Convection</a></li>
 	<li class="secs"><a class="secs" href = "#liqcry">Liquid Crystals</a></li>
     <li class="secs"><a class="secs" href = "#invflag">Inverted Flag</a></li>
 </ul>
@@ -37,10 +38,42 @@ html {
 <hr>
 <table width = "100%">
 <tr>
-<div id="liqcry">
-<h1>Liquid Crystals</h1>
+
+<div id="RBC">
+<h1>Rayleigh-Bernard Convection</h1>
 <p>
-This summer I have been working with Professor Franziska Weber on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
+I have been working with Professor Leslie Smith on a project about Rayleigh-Bernard Convection (RBC). This is an idealized scenario with a fluid in between two plates - a hot plate on the bottom and a cold plate on top. The hotter the fluid is, the less dense therefore more buoyant it is. The colder the fluid is, the more dense and therefore less buoyant it is. Thus, in this scenario we see that the hotter fluid at the bottom will want to float up to the top while the colder fluid at the top will want to sink to the bottom (this is not always true, but the idea is that this is clearly and unstable situation and the fluid is gonna wanna move if the bottom is hot enough relative to the top). 
+<br/>
+<br/>
+The non-dimensionalized equations for these is given by the 
+
+\[
+\begin{cases}
+&\mathbf{u}_t + \mathbf{u}\cdot\nabla \mathbf{u} = - \nabla P + \nu_* \nabla^2 \mathbf{u} + T \hat{y}\\
+&T_t + \mathbf{u} \cdot \nabla T  = \kappa_* \nabla^2 T\\
+&\nabla \cdot \mathbf{u} = 0 \\
+\end{cases}
+\]
+
+where we have that $\mathbf{u}$ is the velocity field, $T$ is the temperature, and $P$ is the pressure - all understood to have been scaled by appropriate constants. Also, 
+
+\[
+\begin{cases}
+&\nu_* = \left( \frac{16 Pr}{Ra}\right)^{1/2} \\
+&\kappa_* = \left( \frac{16 }{RaPr}\right)^{1/2} \\
+&Ra = \frac{g \alpha_V \Delta T H^3}{\nu \kappa} \quad Pr = \frac{\nu}{\kappa}
+\end{cases}
+\]
+
+Those last two constants are the important Rayleigh and Prandtl numbers respectively. There is also the Nusselt number, $Nu$, which represents the the relative strength of convective heat transport. A hotly debated topic is if $Nu \sim Ra^{1/2}$ (the ultimate scaling) or $Nu \sim Ra^{1/3}$ (the classical scaling). Although the word "ultimate" is cool, that is unfortunately not enough to confirm that $Nu \sim Ra^{1/2}$. It seems like this will be debated for decades, but there are variations of RBC that are definitely worth looking at for their practical applications as well as seeing if similar scaling laws hold. 
+<br/>
+<br/>
+<br/>
+
+<div id="liqcry">
+<h2>Liquid Crystals</h2>
+<p>
+In summer of 2019, I worked with Professor Franziska Weber on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
 <br/>
 <br/>
 Given a large splotch of liquid crystals, we can look at a very tiny portion of it and see in general which direction all the particles in that portion are facing. We can identify this direction with a unit vector $n$ which we call the director. What we desire is to model this director at every point in the liquid crystal and see how it changes as we evolve in time. Thus, we have that $n$ is dependent on both space and time - $n(x,t)$. One may notice that a vector has an inherent direction but the liquid crystals themselves don't and thus a vector pointing in the direction $-n$ would also be equally valid. This symmetry that is apparent with the director must be preserved by any model we use for liquid crystals. A model that does that is the Q-tensor model. 
@@ -86,6 +119,10 @@ For simplicity, we first implemented a numerical scheme for the liquid crystals 
 \end{cases}
 \]
 We were able to jump of some pre-existing research for semi-discrete schemes of this same system to develop and implement a fully discrete scheme (which I will not describe or discuss here). We were able to prove that our scheme was energy stable. We wish to soon extend our work to the system with flow. Currently, I am working on this and am trying to get an idea of this Navier-Stokes-esque nature of the model. Previous work on numerical methods for Navier-Stokes is very helpful and once we can settle on a suitable mesh and discretizations for certain terms, we should be able to provide some fully discrete schemes. 
+<br/>
+<br/>
+<br/>
+2022 Edit: Turns out we did not do this exactly in the end, but I did get my Master's Thesis on this research and also got some of it into a paper: <a href = "https://arxiv.org/abs/2012.00278">arXiv:2012.00278</a>
 <br/>
 <br/>
 <br/>
