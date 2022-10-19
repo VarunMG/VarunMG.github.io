@@ -1,0 +1,114 @@
+body {
+    background-color: #6181b5;
+}
+
+
+p {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+li {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+a {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+h1 {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+a:hover {
+    color: white;
+}
+
+.image {
+    text-align: center;
+}
+
+ul.nav {
+    font-family: "Courier New", Courier, monospace;
+    overflow: hidden;
+    background-color: black;
+}
+li.nav {
+    float: left;
+    list-style-type:none;
+}
+li a.nav {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+li a.nav:hover {
+    background-color: #333;
+}
+
+ul.secs {
+    margin: 0.75em 0;
+    padding: 0 1em;
+    list-style: none;
+}
+
+li.secs:before {
+    content: "";
+    border-color: transparent #333;
+    border-style: solid;
+    border-width: 0.35em 0 0.35em 0.5em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 0.9em;
+    position: relative;
+}
+
+li a.secs {
+    text-decoration: none;
+}
+
+li a.secs:hover {
+    color: #333;
+}
+
+.toTop {
+    border-radius: 10px;
+    background-color: #333;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size; 100px;
+    padding: 15px;
+    width; 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin; 3px;
+    position: fixed;
+    bottom: 10px;
+    right; 0px;
+}
+
+.toTop span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.toTop span:after {
+    content: '\039B \039B';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.toTop:hover span:after {
+    opacity: 0.5;
+    right: 0;
+}
+

@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>Varun's Research</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+ tex2jax: {inlineMath: [['$','$'],['\\(','\\)']]}
+ });
+</script>
+<link rel="stylesheet" type="text/css" href="MyStyle.css">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<style>
+html {
+    scroll-behavior: smooth;
+}
+#nav {
+    padding-bottom:5px;
+}
+</style>
+<body>
+<!-- Header -->
+<div id="nav">
+<ul class="nav">
+    <li class="nav"><a class="nav" href = "home.html">Home</a></li>
+    <li class="nav"><a class="nav" href = "#top">Research</a></li>
+    <li class="nav"><a class="nav" href = "hobbies.html">Hobbies</a>
+</ul>
+<div id="top">
+<h1> Research</h1>
+</div>
+<div id="sections">
+<ul class="secs">
+    <li class="secs"><a class="secs" href = "#invflag">Inverted Flag</a></li>
+    <li class="secs"><a class="secs" href = "#liqcry">Liquid Crystals</a></li>
+</ul>
+</div>
+<hr>
+<table width = "100%">
+<tr>
+<div id="invflag">
+<h2>Dynamics of the Inextensible Inverted Flag with Piston-Theoretic Forcing Term </h2>
+<p>
+In the inverted flag system, a thin metal beam is fixed on one end and free to move on the other. Fluid flows from the free end to the fixed end, inducing motion in the beam. The model is of current interest in several applications, including the design of piezolectric harvesting devices. See below for a figure of the system.
+</p>
+<p class = "image">
+<img src="invertedFlagFig.png" width ="400" height="272" title="Inverted Flag Model" align="middle" >
+</p>
+<p>
+The beam is of length $L$ and the fluid flows at speed $U$. A full model of the system would involve a system of PDEs with Navier Stokes for the flow of the fluid coupled with another equation for the motion of the beam. This however is computationally and mathematically expensive. Engineers who look at this system have use tools from Piston Theory which simplifies the interaction between the fluid and the beam to derive just a single equation which models the motion of the beam. We looked at the model proposed by Dowell and McHugh for the inextensible inverted flag - that is a model which preserves the arclength.
+
+\[ \begin{cases}
+w_{tt} +\mathbf{A}(w)(x,t) = -\beta(w_t - Uw_x) & \text{in } (0,L) \times (0,T)\\
+w = w_x = 0  & \text{in } \{0\}\times (0,T) \\
+w_{xx} = w_{xxx} = 0 & \text{in } \{L\} \times (0,T) \\
+w(0) = w_0(x), w_t(0) = w_1(x) & t=0, x \in [0,L] \\
+\end{cases} \]
+
+\[ \begin{align}
+\mathbf A (w) =\underbrace{-D\partial_x\big[(w_{xx})^2w_x \big]+D\partial_{xx}\big[w_{xx}\big(1+(w_x)^2\big)\big]}_{\text{nonlinear stiffness}} \\[1 ex]
++\underbrace{w_x\left[-\int_0^x\left((w_{x t})^2+w_{x tt}w_{x}\right) d\xi\right]}_{\text{nonlinear inertia}}\\[1 ex]
++\underbrace{w_{xx}\int_x^L\Big[\int_0^{\xi_2} \big((w_{x t})^2)w_{x tt}w_{x}\big)d\xi_1\Big]d\xi_2}_{\text{nonlinear inertia}}-
+\end{align}
+\]
+
+To finally model the system compuationally, we conducted a modal analysis where we found an orthonormal basis of modes (also called shape functions) such that the shape at any single time could be written as a linear combination of these modes.
+
+\[ w(x,t) = \sum_{i=1}^n q_i(t) s_i(x) \]
+
+The time dependent coefficients $q_i(t)$ are found through an infinite system of ODEs. To actually conduct numerics for the system, we truncate the system to finitely many, $N$, equations
+
+$$m \left[ q_j'' + \sum_{i=1}^N \left[q_i''(q_i)^2+(q_i')^2q_i\right]\mathcal I_{iiij}\right] + D q_j k_j^4 + D \sum_{i=1}^N q_i^3\left[\mathcal S_{iiij}+\mathcal S_{jiii}\right] = -\beta q_j' + \beta U \sum_{i=1}^N q_i \gamma_{ij}$$
+
+This is just the $j^{th}$ line of the system of ODEs. This is a second order, nonlinear, and implicity system of $N$ equations which through a reduction of order produces a system of $2N$ equations. Using MATLAB's inbuilt $\texttt{ode15i}$ ODE solver we could then solve numerically for the $q_i(t)$ and then take the linear combination with the shape functions to recover a numerical system to the PDE.
+<br/>
+<br/>
+We found in our results that a certain regime of behavior known as flutter where the beam oscillates periodically was not found. It is known that the inverted flag in real life actually does flutter, but it seemed that our simulations were unable to capture it. However, we did see a certain bifurcation point where as we varied the flow speed, $U$, that the beam would change from damping to equilibrium to reaching a nontrivial deflected state. Further, this bifurcation point appeared to be independent of the initial condition. When the beam reached the nontrivial deflected states, there were contributions from multiple modes, not just a single mode. Finally, we also saw that the modal simulations were unable to conserve the inextensibility condition. We saw that the arc length was not conserved for certain regimes of $U$ and $\beta$.
+
+<br>
+<p>
+Here's me at my favorite spot in the computer lab that summer doing research.
+<center>
+<img src="doingResearch.jpg" width ="402" height="302" title="Doing Research" align="middle" >
+</center>
+</div>
+<div id="liqcry">
+<h2>Liquid Crystals</h2>
+<p>
+This summer I have been working with Professor Franziska Weber on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
+<br/>
+<br/>
+Given a large splotch of liquid crystals, we can look at a very tiny portion of it and see in general which direction all the particles in that portion are facing. We can identify this direction with a unit vector $n$ which we call the director. What we desire is to model this director at every point in the liquid crystal and see how it changes as we evolve in time. Thus, we have that $n$ is dependent on both space and time - $n(x,t)$. One may notice that a vector has an inherent direction but the liquid crystals themselves don't and thus a vector pointing in the direction $-n$ would also be equally valid. This symmetry that is apparent with the director must be preserved by any model we use for liquid crystals. A model that does that is the Q-tensor model. 
+<br/>
+<br/>
+Given a director $n(x,t)$ we can define a Q-tensor
+
+\[ Q(x,t) = s(x,t) \left( n(x,t) n(x,t)^T - \frac{1}{d} I_d \right) \]
+
+where $d = 2,3$ is the dimension of the space we are dealing with and $I_d$ is the identity matrix of dimension $d \times d$. The $s(x,t)$ function is what's called a scalar order parameter which is a scalar valued function that gives an idea of how well a patch of liquid crystals are aligned. The idea behind the Q-tensor is we encode the director into $Q$ and then evolve it in time. Thus if we want to know the director at any point in the splotch of liquid crystals or at any later time, we can find the Q-tensor at that space/time and decode the director (by finding the eigenvectors). The model we used to evolve the liquid crystals is governed by the following equations:
+
+\[
+\begin{cases}
+&u_t + B(u,u) = - \nabla p + \eta \Delta u + \nabla \cdot \sigma - \mathcal{H}\nabla Q \\
+&\nabla \cdot u = 0 \\
+&Q_t + u \cdot \nabla Q - S = M\mathcal{H} \\
+&q_t = P(Q): Q_t 
+\end{cases}
+\]
+
+where 
+
+\[
+\begin{cases}
+&P(Q) := \frac{aQ - b(Q^2 - \frac{1}{2}tr(Q^2)I) + c tr(Q^2)Q}{\sqrt{2\left(\frac{a}{2}tr(Q^2)-\frac{b}{3}tr(Q^3)+\frac{c}{4}tr^2(Q^2)+A_0\right)}} \\
+&\mathcal{H} = L \Delta Q - qP(Q) \\
+&\sigma(Q,\mathcal{H}) = Q\mathcal{H} - \mathcal{H}Q - \xi (\mathcal{H}Q + Q\mathcal{H}) - \frac{2\xi}{3}\left(\mathcal{H} - \frac{1}{d}tr(\mathcal{H})I\right)+2\xi(Q:H)Q \\
+&B(u,v) = u \cdot \nabla v + \frac{1}{2} (\nabla \cdot u)v \\
+&D = \frac{1}{2}(\nabla u +  \nabla u^T) \\
+&W = \frac{1}{2}(\nabla u - \nabla u^T) \\
+&S = WQ - QW + \xi(QD + DQ)+ \frac{2\xi}{3}D - 2\xi(D:Q)\left(Q + \frac{1}{d}I\right) 
+\end{cases}
+\]
+
+These equations are the full equations for flows of liquid crystals. Notice that the first two equation are Navier-Stokes-esque with the second equation being an incompressibility condition and the first equation (using the incompressibility) can be written as $u_t + (u \cdot \nabla) u = -\nabla p + \eta \Delta u + \Lambda(Q,\mathcal{H})$, which is a Navier-Stokes-esque equation. 
+<br/>
+<br/>
+For simplicity, we first implemented a numerical scheme for the liquid crystals with no flow. This corresponds to the system 
+\[
+\begin{cases}
+&Q_t = M (L\Delta Q - q P(Q)) \\
+&q_t = P(Q):Q_t
+\end{cases}
+\]
+We were able to jump of some pre-existing research for semi-discrete schemes of this same system to develop and implement a fully discrete scheme (which I will not describe or discuss here). We were able to prove that our scheme was energy stable. We wish to soon extend our work to the system with flow. Currently, I am working on this and am trying to get an idea of this Navier-Stokes-esque nature of the model. Previous work on numerical methods for Navier-Stokes is very helpful and once we can settle on a suitable mesh and discretizations for certain terms, we should be able to provide some fully discrete schemes. 
+<br/>
+<br/>
+<br/>
+</div>
+<button onclick="location.href='#top'" type="button" class="toTop">Back To Top</button>
+</body>
+</html>
+
+
