@@ -21,7 +21,7 @@ html {
 <!-- Header -->
 <div id="nav">
 <ul class="nav">
-    <li class="nav"><a class="nav" href = "index.html">Home</a></li>
+    <li class="nav"><a class="nav" href = "home.html">Home</a></li>
     <li class="nav"><a class="nav" href = "#top">Research</a></li>
     <li class="nav"><a class="nav" href = "hobbies.html">Hobbies</a>
 </ul>
@@ -37,53 +37,8 @@ html {
 <hr>
 <table width = "100%">
 <tr>
-<div id="invflag">
-<h2>Dynamics of the Inextensible Inverted Flag with Piston-Theoretic Forcing Term </h2>
-<p>
-In the inverted flag system, a thin metal beam is fixed on one end and free to move on the other. Fluid flows from the free end to the fixed end, inducing motion in the beam. The model is of current interest in several applications, including the design of piezolectric harvesting devices. See below for a figure of the system.
-</p>
-<p class = "image">
-<img src="invertedFlagFig.png" width ="400" height="272" title="Inverted Flag Model" align="middle" >
-</p>
-<p>
-The beam is of length $L$ and the fluid flows at speed $U$. A full model of the system would involve a system of PDEs with Navier Stokes for the flow of the fluid coupled with another equation for the motion of the beam. This however is computationally and mathematically expensive. Engineers who look at this system have use tools from Piston Theory which simplifies the interaction between the fluid and the beam to derive just a single equation which models the motion of the beam. We looked at the model proposed by Dowell and McHugh for the inextensible inverted flag - that is a model which preserves the arclength.
-
-\[ \begin{cases}
-w_{tt} +\mathbf{A}(w)(x,t) = -\beta(w_t - Uw_x) & \text{in } (0,L) \times (0,T)\\
-w = w_x = 0  & \text{in } \{0\}\times (0,T) \\
-w_{xx} = w_{xxx} = 0 & \text{in } \{L\} \times (0,T) \\
-w(0) = w_0(x), w_t(0) = w_1(x) & t=0, x \in [0,L] \\
-\end{cases} \]
-
-\[ \begin{align}
-\mathbf A (w) =\underbrace{-D\partial_x\big[(w_{xx})^2w_x \big]+D\partial_{xx}\big[w_{xx}\big(1+(w_x)^2\big)\big]}_{\text{nonlinear stiffness}} \\[1 ex]
-+\underbrace{w_x\left[-\int_0^x\left((w_{x t})^2+w_{x tt}w_{x}\right) d\xi\right]}_{\text{nonlinear inertia}}\\[1 ex]
-+\underbrace{w_{xx}\int_x^L\Big[\int_0^{\xi_2} \big((w_{x t})^2)w_{x tt}w_{x}\big)d\xi_1\Big]d\xi_2}_{\text{nonlinear inertia}}-
-\end{align}
-\]
-
-To finally model the system compuationally, we conducted a modal analysis where we found an orthonormal basis of modes (also called shape functions) such that the shape at any single time could be written as a linear combination of these modes.
-
-\[ w(x,t) = \sum_{i=1}^n q_i(t) s_i(x) \]
-
-The time dependent coefficients $q_i(t)$ are found through an infinite system of ODEs. To actually conduct numerics for the system, we truncate the system to finitely many, $N$, equations
-
-$$m \left[ q_j'' + \sum_{i=1}^N \left[q_i''(q_i)^2+(q_i')^2q_i\right]\mathcal I_{iiij}\right] + D q_j k_j^4 + D \sum_{i=1}^N q_i^3\left[\mathcal S_{iiij}+\mathcal S_{jiii}\right] = -\beta q_j' + \beta U \sum_{i=1}^N q_i \gamma_{ij}$$
-
-This is just the $j^{th}$ line of the system of ODEs. This is a second order, nonlinear, and implicity system of $N$ equations which through a reduction of order produces a system of $2N$ equations. Using MATLAB's inbuilt $\texttt{ode15i}$ ODE solver we could then solve numerically for the $q_i(t)$ and then take the linear combination with the shape functions to recover a numerical system to the PDE.
-<br/>
-<br/>
-We found in our results that a certain regime of behavior known as flutter where the beam oscillates periodically was not found. It is known that the inverted flag in real life actually does flutter, but it seemed that our simulations were unable to capture it. However, we did see a certain bifurcation point where as we varied the flow speed, $U$, that the beam would change from damping to equilibrium to reaching a nontrivial deflected state. Further, this bifurcation point appeared to be independent of the initial condition. When the beam reached the nontrivial deflected states, there were contributions from multiple modes, not just a single mode. Finally, we also saw that the modal simulations were unable to conserve the inextensibility condition. We saw that the arc length was not conserved for certain regimes of $U$ and $\beta$.
-
-<br>
-<p>
-Here's me at my favorite spot in the computer lab that summer doing research.
-<center>
-<img src="doingResearch.jpg" width ="402" height="302" title="Doing Research" align="middle" >
-</center>
-</div>
 <div id="liqcry">
-<h2>Liquid Crystals</h2>
+<h1>Liquid Crystals</h1>
 <p>
 This summer I have been working with Professor Franziska Weber on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
 <br/>
@@ -134,6 +89,53 @@ We were able to jump of some pre-existing research for semi-discrete schemes of 
 <br/>
 <br/>
 <br/>
+
+<div id="invflag">
+<h2>Dynamics of the Inextensible Inverted Flag with Piston-Theoretic Forcing Term </h2>
+<p>
+In the inverted flag system, a thin metal beam is fixed on one end and free to move on the other. Fluid flows from the free end to the fixed end, inducing motion in the beam. The model is of current interest in several applications, including the design of piezolectric harvesting devices. See below for a figure of the system.
+</p>
+<p class = "image">
+<img src="invertedFlagFig.png" width ="400" height="272" title="Inverted Flag Model" align="middle" >
+</p>
+<p>
+The beam is of length $L$ and the fluid flows at speed $U$. A full model of the system would involve a system of PDEs with Navier Stokes for the flow of the fluid coupled with another equation for the motion of the beam. This however is computationally and mathematically expensive. Engineers who look at this system have use tools from Piston Theory which simplifies the interaction between the fluid and the beam to derive just a single equation which models the motion of the beam. We looked at the model proposed by Dowell and McHugh for the inextensible inverted flag - that is a model which preserves the arclength.
+
+\[ \begin{cases}
+w_{tt} +\mathbf{A}(w)(x,t) = -\beta(w_t - Uw_x) & \text{in } (0,L) \times (0,T)\\
+w = w_x = 0  & \text{in } \{0\}\times (0,T) \\
+w_{xx} = w_{xxx} = 0 & \text{in } \{L\} \times (0,T) \\
+w(0) = w_0(x), w_t(0) = w_1(x) & t=0, x \in [0,L] \\
+\end{cases} \]
+
+\[ \begin{align}
+\mathbf A (w) =\underbrace{-D\partial_x\big[(w_{xx})^2w_x \big]+D\partial_{xx}\big[w_{xx}\big(1+(w_x)^2\big)\big]}_{\text{nonlinear stiffness}} \\[1 ex]
++\underbrace{w_x\left[-\int_0^x\left((w_{x t})^2+w_{x tt}w_{x}\right) d\xi\right]}_{\text{nonlinear inertia}}\\[1 ex]
++\underbrace{w_{xx}\int_x^L\Big[\int_0^{\xi_2} \big((w_{x t})^2)w_{x tt}w_{x}\big)d\xi_1\Big]d\xi_2}_{\text{nonlinear inertia}}-
+\end{align}
+\]
+
+To finally model the system compuationally, we conducted a modal analysis where we found an orthonormal basis of modes (also called shape functions) such that the shape at any single time could be written as a linear combination of these modes.
+
+\[ w(x,t) = \sum_{i=1}^n q_i(t) s_i(x) \]
+
+The time dependent coefficients $q_i(t)$ are found through an infinite system of ODEs. To actually conduct numerics for the system, we truncate the system to finitely many, $N$, equations
+
+$$m \left[ q_j'' + \sum_{i=1}^N \left[q_i''(q_i)^2+(q_i')^2q_i\right]\mathcal I_{iiij}\right] + D q_j k_j^4 + D \sum_{i=1}^N q_i^3\left[\mathcal S_{iiij}+\mathcal S_{jiii}\right] = -\beta q_j' + \beta U \sum_{i=1}^N q_i \gamma_{ij}$$
+
+This is just the $j^{th}$ line of the system of ODEs. This is a second order, nonlinear, and implicity system of $N$ equations which through a reduction of order produces a system of $2N$ equations. Using MATLAB's inbuilt $\texttt{ode15i}$ ODE solver we could then solve numerically for the $q_i(t)$ and then take the linear combination with the shape functions to recover a numerical system to the PDE.
+<br/>
+<br/>
+We found in our results that a certain regime of behavior known as flutter where the beam oscillates periodically was not found. It is known that the inverted flag in real life actually does flutter, but it seemed that our simulations were unable to capture it. However, we did see a certain bifurcation point where as we varied the flow speed, $U$, that the beam would change from damping to equilibrium to reaching a nontrivial deflected state. Further, this bifurcation point appeared to be independent of the initial condition. When the beam reached the nontrivial deflected states, there were contributions from multiple modes, not just a single mode. Finally, we also saw that the modal simulations were unable to conserve the inextensibility condition. We saw that the arc length was not conserved for certain regimes of $U$ and $\beta$.
+
+<br>
+<p>
+Here's me at my favorite spot in the computer lab that summer doing research.
+<center>
+<img src="doingResearch.jpg" width ="402" height="302" title="Doing Research" align="middle" >
+</center>
+</div>
+
 </div>
 <button onclick="location.href='#top'" type="button" class="toTop">Back To Top</button>
 </body>
