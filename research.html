@@ -53,9 +53,9 @@ html {
 <tr>
 
 <div id="RBC">
-<h1>Rayleigh-Bernard Convection</h1>
+<h1>Convection</h1>
 <p>
-I have been working with Professor Leslie Smith on a project about Rayleigh-Bernard Convection (RBC). This is an idealized scenario with a fluid in between two plates - a hot plate on the bottom and a cold plate on top. The hotter the fluid is, the less dense therefore more buoyant it is. The colder the fluid is, the more dense and therefore less buoyant it is. Thus, in this scenario we see that the hotter fluid at the bottom will want to float up to the top while the colder fluid at the top will want to sink to the bottom (this is not always true, but the idea is that this is clearly and unstable situation and the fluid is gonna wanna move if the bottom is hot enough relative to the top). 
+I have been working with <a href = "https://people.math.wisc.edu/~lsmith/">Professor Leslie Smith</a> on a project about convection. A popular model for convection is called Rayleigh-Benard Convection (RBC) This is an idealized scenario with a fluid in between two plates - a hot plate on the bottom and a cold plate on top. The hotter the fluid is, the less dense therefore more buoyant it is. The colder the fluid is, the more dense and therefore less buoyant it is. Thus, in this scenario we see that the hotter fluid at the bottom will want to float up to the top while the colder fluid at the top will want to sink to the bottom (in the simulation below you'll see some colder fluid sometimes moving up, but the idea is that this is clearly an unstable situation and the fluid is gonna wanna move if the bottom is hot enough relative to the top). 
 <br/>
 <br/>
 The non-dimensionalized equations for these is given by the 
@@ -93,14 +93,17 @@ Simulation of RBC with $Ra=3\times 10^6$ and $Pr=7$. Horizontal length scale is 
 </p>
 </center>
 
+
 <br/>
 <br/>
 <br/>
 
+My current project is about internally heated convection where there's a volumetric heating/cooling source. More details to come in the future. 
+
 <div id="liqcry">
 <h2>Liquid Crystals</h2>
 <p>
-In summer of 2019, I worked with Professor Franziska Weber on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
+In summer of 2019, I worked with  <a href = "https://sites.google.com/berkeley.edu/fweber">Professor Franziska Weber</a> on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
 <br/>
 <br/>
 Given a large splotch of liquid crystals, we can look at a very tiny portion of it and see in general which direction all the particles in that portion are facing. We can identify this direction with a unit vector $n$ which we call the director. What we desire is to model this director at every point in the liquid crystal and see how it changes as we evolve in time. Thus, we have that $n$ is dependent on both space and time - $n(x,t)$. One may notice that a vector has an inherent direction but the liquid crystals themselves don't and thus a vector pointing in the direction $-n$ would also be equally valid. This symmetry that is apparent with the director must be preserved by any model we use for liquid crystals. A model that does that is the Q-tensor model. 
@@ -114,9 +117,7 @@ where $d = 2,3$ is the dimension of the space we are dealing with and $I_d$ is t
 
 \[
 \begin{cases}
-&u_t + B(u,u) = - \nabla p + \eta \Delta u + \nabla \cdot \sigma - \mathcal{H}\nabla Q \\
-&\nabla \cdot u = 0 \\
-&Q_t + u \cdot \nabla Q - S = M\mathcal{H} \\
+&Q_t =  M\mathcal{H} \\
 &q_t = P(Q): Q_t 
 \end{cases}
 \]
@@ -126,30 +127,27 @@ where
 \[
 \begin{cases}
 &P(Q) := \frac{aQ - b(Q^2 - \frac{1}{2}tr(Q^2)I) + c tr(Q^2)Q}{\sqrt{2\left(\frac{a}{2}tr(Q^2)-\frac{b}{3}tr(Q^3)+\frac{c}{4}tr^2(Q^2)+A_0\right)}} \\
-&\mathcal{H} = L \Delta Q - qP(Q) \\
-&\sigma(Q,\mathcal{H}) = Q\mathcal{H} - \mathcal{H}Q - \xi (\mathcal{H}Q + Q\mathcal{H}) - \frac{2\xi}{3}\left(\mathcal{H} - \frac{1}{d}tr(\mathcal{H})I\right)+2\xi(Q:H)Q \\
-&B(u,v) = u \cdot \nabla v + \frac{1}{2} (\nabla \cdot u)v \\
-&D = \frac{1}{2}(\nabla u +  \nabla u^T) \\
-&W = \frac{1}{2}(\nabla u - \nabla u^T) \\
-&S = WQ - QW + \xi(QD + DQ)+ \frac{2\xi}{3}D - 2\xi(D:Q)\left(Q + \frac{1}{d}I\right) 
+&\mathcal{H} = L_1 \Delta Q + \frac{L_2+L_3}{2} \alpha(Q) - qP(Q) \\
+&\alpha(Q) = \sum_{k=1}^d (\partial_{ik} Q_{jk} + \partial_{jk}Q_{ik}) - \frac{2}{d} \sum_{k, \ell=1}^d \partial_{k \ell} Q_{k \ell} \delta_{ij} 
 \end{cases}
 \]
 
-These equations are the full equations for flows of liquid crystals. Notice that the first two equation are Navier-Stokes-esque with the second equation being an incompressibility condition and the first equation (using the incompressibility) can be written as $u_t + (u \cdot \nabla) u = -\nabla p + \eta \Delta u + \Lambda(Q,\mathcal{H})$, which is a Navier-Stokes-esque equation. 
 <br/>
 <br/>
-For simplicity, we first implemented a numerical scheme for the liquid crystals with no flow. This corresponds to the system 
+
+
+
+The above equations are for the evolution of liquid crystals with no flow and also satisfy a certain energy constraint:
+
 \[
-\begin{cases}
-&Q_t = M (L\Delta Q - q P(Q)) \\
-&q_t = P(Q):Q_t
-\end{cases}
+\begin{equation} \frac{d}{dt} \frac{1}{2} \int_{\Omega} L_1 | \nabla Q|^2 + (L_2+L_3) |\nabla \cdot Q|^2 + r^2 dx = -M \int_{\Omega} |H|^2 dx \end{equation}
 \]
-We were able to jump of some pre-existing research for semi-discrete schemes of this same system to develop and implement a fully discrete scheme (which I will not describe or discuss here). We were able to prove that our scheme was energy stable. We wish to soon extend our work to the system with flow. Currently, I am working on this and am trying to get an idea of this Navier-Stokes-esque nature of the model. Previous work on numerical methods for Navier-Stokes is very helpful and once we can settle on a suitable mesh and discretizations for certain terms, we should be able to provide some fully discrete schemes. 
+
+We were able to jump off some pre-existing research for semi-discrete schemes of this same system to develop and implement a fully discrete scheme (which I will not describe or discuss here). We showed analytically that our proposed method was energy stable (preserving the above energy constraint in a discrete sense) and also convergence of the method. 
 <br/>
 <br/>
 <br/>
-2022 Edit: Turns out we did not do this exactly in the end, but I did get my Master's Thesis on this research and also got some of it into a paper: <a href = "https://arxiv.org/abs/2012.00278">arXiv:2012.00278</a>
+This is a rough sketch of what I worked on to get my Master's Thesis (I worked on the energy stability part) and also got some of it into a paper: <a href = "https://arxiv.org/abs/2012.00278">arXiv:2012.00278</a>
 <br/>
 <br/>
 <br/>
@@ -157,7 +155,7 @@ We were able to jump of some pre-existing research for semi-discrete schemes of 
 <div id="invflag">
 <h2>Dynamics of the Inextensible Inverted Flag with Piston-Theoretic Forcing Term </h2>
 <p>
-In the inverted flag system, a thin metal beam is fixed on one end and free to move on the other. Fluid flows from the free end to the fixed end, inducing motion in the beam. The model is of current interest in several applications, including the design of piezolectric harvesting devices. See below for a figure of the system.
+In summer of 2019, I worked with <a href = "https://www.cmu.edu/math/people/faculty/howell.html">Professor Jason Howell</a> on the inverted flag system funded by a Summer Undergraduate Research Fellowship (SURF) at CMU. In the inverted flag system, a thin metal beam is fixed on one end and free to move on the other. Fluid flows from the free end to the fixed end, inducing motion in the beam. The model is of current interest in several applications, including the design of piezolectric harvesting devices. See below for a figure of the system.
 </p>
 <p class = "image">
 <img src="invertedFlagFig.png" width ="400" height="272" title="Inverted Flag Model" align="middle" >
@@ -190,7 +188,11 @@ $$m \left[ q_j'' + \sum_{i=1}^N \left[q_i''(q_i)^2+(q_i')^2q_i\right]\mathcal I_
 This is just the $j^{th}$ line of the system of ODEs. This is a second order, nonlinear, and implicity system of $N$ equations which through a reduction of order produces a system of $2N$ equations. Using MATLAB's inbuilt $\texttt{ode15i}$ ODE solver we could then solve numerically for the $q_i(t)$ and then take the linear combination with the shape functions to recover a numerical system to the PDE.
 <br/>
 <br/>
-We found in our results that a certain regime of behavior known as flutter where the beam oscillates periodically was not found. It is known that the inverted flag in real life actually does flutter, but it seemed that our simulations were unable to capture it. However, we did see a certain bifurcation point where as we varied the flow speed, $U$, that the beam would change from damping to equilibrium to reaching a nontrivial deflected state. Further, this bifurcation point appeared to be independent of the initial condition. When the beam reached the nontrivial deflected states, there were contributions from multiple modes, not just a single mode. Finally, we also saw that the modal simulations were unable to conserve the inextensibility condition. We saw that the arc length was not conserved for certain regimes of $U$ and $\beta$.
+We found in our results that a certain regime of behavior known as flutter where the beam oscillates periodically was not found. It is known that the inverted flag in real life actually does flutter, but it seemed that our simulations were unable to capture it. However, we did see a certain bifurcation point where as we varied the flow speed, $U$, that the beam would change from damping to equilibrium to reaching a nontrivial deflected state. Further, this bifurcation point appeared to be independent of the initial condition. When the beam reached the nontrivial deflected states, there were contributions from multiple modes, not just a single mode. Finally, we also saw that the modal simulations were unable to conserve the inextensibility condition. We saw that the arc length was not conserved for certain regimes of $U$ and $\beta$. Here's a simulation  demonstrating the system approaching a deflected state:
+
+<center>
+<img src="invertedflag.gif" title="Inverted Flag" align="middle" >
+</center>
 
 <br>
 <p>
