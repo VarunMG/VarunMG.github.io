@@ -44,7 +44,7 @@ html {
 
 <div id="sections">
 <ul class="secs">
-	<li class="secs"><a class="secs" href = "#RBC">Rayleigh-Bernard Convection</a></li>
+	<li class="secs"><a class="secs" href = "#RBC">Convection</a></li>
 	<li class="secs"><a class="secs" href = "#liqcry">Liquid Crystals</a></li>
     <li class="secs"><a class="secs" href = "#invflag">Inverted Flag</a></li>
 </ul>
@@ -99,12 +99,14 @@ Simulation of RBC with $Ra=3\times 10^6$ and $Pr=7$. Horizontal length scale is 
 <br/>
 <br/>
 
-My current project is about internally heated convection where there's a volumetric heating/cooling source. More details to come in the future. 
+<p>
+My thesis considered novel coherent structures in 3D (opposed to only previously found 2D structures) that exhibited 60-degree rotational symmetry - hexagonal states. We found that in the case of RBC, these states transport heat more efficiently than previously found 2D structures. In a particular radiatively driven system considered in Kazemi et al. (2022), we found 2D states and hexagonal states and found that once again the hexagonal states transport heat more efficiently with the effect especially pronounced in the case of net-zero heating-cooling. 
+</p>
 
 <div id="liqcry">
 <h2>Liquid Crystals</h2>
 <p>
-In summer of 2019, I worked with  <a href = "https://sites.google.com/berkeley.edu/fweber">Professor Franziska Weber</a> on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
+In summer of 2019, I worked with  <a href = "https://sites.google.com/berkeley.edu/fweber">Professor Franziska Weber</a> and Yukun Yue on liquid crystals. You've likely interacted with liquid crystals without even knowing it - an LCD screen is a Liquid Crystal Display. A liquid crystals is an inbetween state - it's sort of a liquid and sort of a solid. In a liquid, all the particles are randomly aligned while in a solid, all the particles are completely aligned. For a liquid crystal, we can think of the particles as being "vaugely aligned." Now that we understand that, we can move on to the physical model of the liquid crystals we used. 
 <br/>
 <br/>
 Given a large splotch of liquid crystals, we can look at a very tiny portion of it and see in general which direction all the particles in that portion are facing. We can identify this direction with a unit vector $n$ which we call the director. What we desire is to model this director at every point in the liquid crystal and see how it changes as we evolve in time. Thus, we have that $n$ is dependent on both space and time - $n(x,t)$. One may notice that a vector has an inherent direction but the liquid crystals themselves don't and thus a vector pointing in the direction $-n$ would also be equally valid. This symmetry that is apparent with the director must be preserved by any model we use for liquid crystals. A model that does that is the Q-tensor model. 
